@@ -133,7 +133,7 @@ export default function App() {
   }, [totalUang, totalHarga]);
 
   function handleSelesai() {
-    if (totalUang === 0) {
+    if (totalKembalian === 0) {
       alert("Selesaikan pembayaran terlebih dahulu");
     } else {
       setMinumanDipilih([]);
