@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Input from "./components/Input.jsx";
 import FormInput from "./layout/FormInput/FormInput.jsx";
 import ListBarang from "./layout/ListBarang.jsx";
@@ -48,13 +48,31 @@ const botol = [
 
 export default function App() {
   const [minumanDipilih, setMinumanDipilih] = useState([]);
+  const [totalHarga, setTotalHarga] = useState(0);
+
+  useEffect(() => {
+    const total = calculateTotalBayar(minumanDipilih);
+    setTotalHarga(total);
+  }, [minumanDipilih]);
+
+  function calculateTotalBayar(minumanDipilih) {
+    let total = 0;
+    minumanDipilih.forEach((minuman) => {
+      total += minuman.harga * minuman.jumlah;
+    });
+    return total;
+  }
 
   return (
     <>
       <div className="w-[60%] h-1/2 bg-slate-400 mx-auto min-h-screen my-4 p-4 flex gap-2">
         <div className="bg-pink-400  p-4 w-[70%]">
           <ListBotol data={botol} setMinumanDipilih={setMinumanDipilih} />
-          <Input />
+          <Input
+            dataHarga={botol}
+            setMinumanDipilih={setMinumanDipilih}
+            totalHarga={totalHarga}
+          />
           <div className="flex gap-2 mt-2">
             <div className="flex-1">
               {minumanDipilih.map((minuman, index) => (
@@ -62,7 +80,7 @@ export default function App() {
                   key={index}
                   data={minuman}
                   jumlah={minuman.jumlah}
-                /> // Menggunakan jumlah dari setiap minuman
+                />
               ))}
             </div>
             {minumanDipilih.length > 0 && (

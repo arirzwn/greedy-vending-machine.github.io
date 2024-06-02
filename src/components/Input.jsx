@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Button from "./Button.jsx";
 
-export default function Input() {
+export default function Input({ dataHarga, totalHarga }) {
   const [totalUang, setTotalUang] = useState(0);
   const [inputUang, setInputUang] = useState(0);
 
@@ -21,7 +21,7 @@ export default function Input() {
           <input
             className="block p-2  rounded-md flex-1"
             disabled
-            value={totalUang}
+            value={totalHarga}
           />
           <Button
             className="rounded-md shadow-slate-800 shadow-sm  text-sm w-20 bg-white"
