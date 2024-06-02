@@ -10,6 +10,7 @@ export default function Input({ totalHarga, handleBatal, setTotalKembalian }) {
     setTotalUang(newTotalUang);
     const kembalian = newTotalUang - totalHarga;
     setTotalKembalian(kembalian);
+    setTotalUang(0); // reset total uang setelah uang dimasukkan
     setInputUang(0); // reset input uang setelah ditambahkan ke total uang
   }
 

@@ -91,7 +91,8 @@ export default function App() {
             setMinumanDipilih={setMinumanDipilih}
             totalHarga={totalHarga}
             handleBatal={handleBatal}
-            setTotalKembalian={setTotalKembalian} // tambahkan ini
+            setTotalKembalian={setTotalKembalian}
+            setTotalHarga={setTotalHarga} // tambahkan ini
           />
           <div className="flex gap-2 mt-2">
             <div className="flex-1">
