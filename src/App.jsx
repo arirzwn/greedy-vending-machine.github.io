@@ -7,6 +7,30 @@ import ListBotol from "./layout/ListBotol.jsx";
 import AmbilKembalian from "./layout/AmbilKembalian.jsx";
 import Button from "./components/Button.jsx";
 
+const uang = [
+  { nominal: 100000, gambar: "./src/assets/Uang/seratus.png" },
+  {
+    nominal: 50000,
+    gambar: "./src/assets/Uang/limapuluh.png",
+  },
+  {
+    nominal: 20000,
+    gambar: "./src/assets/Uang/duapuluh.png",
+  },
+  {
+    nominal: 10000,
+    gambar: "./src/assets/Uang/sepuluh.png",
+  },
+  {
+    nominal: 5000,
+    gambar: "./src/assets/Uang/limarebu.png",
+  },
+  {
+    nominal: 1000,
+    gambar: "./src/assets/Uang/serebu.png",
+  },
+];
+
 const botol = [
   {
     id: 1,
@@ -51,6 +75,7 @@ export default function App() {
   const [totalHarga, setTotalHarga] = useState(0);
   const [totalUang, setTotalUang] = useState(0);
   const [totalKembalian, setTotalKembalian] = useState(0);
+  const [selesai, setSelesai] = useState(false);
 
   useEffect(() => {
     const total = calculateTotalBayar(minumanDipilih);
@@ -81,10 +106,47 @@ export default function App() {
     setTotalKembalian(0);
   }
 
+  function calculateKembalian(totalKembalian, uang) {
+    // Sort the uang array in descending order
+    uang.sort((a, b) => b.nominal - a.nominal);
+
+    let result = [];
+
+    for (let i = 0; i < uang.length; i++) {
+      let count = 0;
+      while (totalKembalian >= uang[i].nominal) {
+        totalKembalian -= uang[i].nominal;
+        count++;
+      }
+      if (count > 0) {
+        result.push({ ...uang[i], jumlah: count });
+      }
+    }
+
+    return result;
+  }
+
+  useEffect(() => {
+    const kembalian = calculateTotalKembalian(totalUang, totalHarga);
+    const uangKembalian = calculateKembalian(kembalian, uang);
+    setTotalKembalian(uangKembalian);
+  }, [totalUang, totalHarga]);
+
+  function handleSelesai() {
+    if (totalUang === 0) {
+      alert("Selesaikan pembayaran terlebih dahulu");
+    } else {
+      setMinumanDipilih([]);
+      setTotalHarga(0);
+      setTotalUang(0);
+      setTotalKembalian(0);
+    }
+  }
+
   return (
     <>
-      <div className="w-[60%] h-1/2 bg-slate-400 mx-auto min-h-screen my-4 p-4 flex gap-2">
-        <div className="bg-pink-400  p-4 w-[70%]">
+      <div className="w-[60%] h-1/2 bg-[#3AA6B9] mx-auto min-h-screen my-4 p-4 flex gap-2">
+        <div className="bg-[#FF9EAA] p-4 w-[70%]">
           <ListBotol data={botol} setMinumanDipilih={setMinumanDipilih} />
           <Input
             dataHarga={botol}
@@ -92,7 +154,7 @@ export default function App() {
             totalHarga={totalHarga}
             handleBatal={handleBatal}
             setTotalKembalian={setTotalKembalian}
-            setTotalHarga={setTotalHarga} // tambahkan ini
+            setTotalHarga={setTotalHarga}
           />
           <div className="flex gap-2 mt-2">
             <div className="flex-1">
@@ -105,15 +167,18 @@ export default function App() {
               ))}
             </div>
             {minumanDipilih.length > 0 && (
-              <Button className="rounded-md shadow-slate-800 shadow-sm  text-sm w-20 bg-white">
-                Ambil
+              <Button
+                className="rounded-md shadow-slate-800 shadow-sm  text-sm w-20 bg-white"
+                onClick={handleSelesai}
+              >
+                Selesai
               </Button>
             )}
           </div>
         </div>
         <div>
           <TotalKembalian totalKembalian={totalKembalian} />
-          <AmbilKembalian />
+          <AmbilKembalian uang={uang} totalKembalian={totalKembalian} />
         </div>
       </div>
     </>

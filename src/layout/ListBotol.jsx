@@ -44,7 +44,7 @@ export default function ListBotol({ data, setMinumanDipilih }) {
             </figure>
             <div className="text-center">
               <h5 className="text-sm"> {objBotol.nama} </h5>
-              <span className="text-sm bg-pink-200 py-1  px-4 rounded-full">
+              <span className="text-sm bg-[#FF9EAA] py-1  px-4 rounded-full">
                 {" "}
                 {objBotol.harga}{" "}
               </span>
