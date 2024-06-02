@@ -2,16 +2,32 @@ import { useEffect, useState } from "react";
 
 export default function ListBotol({ data, setMinumanDipilih }) {
   const [pilihMinuman, setPilihMinuman] = useState();
+  const [selectedIds, setSelectedIds] = useState([]); // <-- Perubahan di sini
 
   function handleClick(id) {
-    setPilihMinuman(id);
+    if (!selectedIds.includes(id)) {
+      // <-- Perubahan di sini
+      setPilihMinuman(id);
+      setSelectedIds((prevIds) => [...prevIds, id]); // <-- Perubahan di sini
+    }
   }
 
   function getSelectedBottle() {
     const selectedBottle = data.find((b) => b.id === pilihMinuman);
     if (selectedBottle) {
-      setMinumanDipilih(selectedBottle);
-      console.log(selectedBottle);
+      setMinumanDipilih((prevMinumanDipilih) => {
+        const existingBottle = prevMinumanDipilih.find(
+          (b) => b.id === selectedBottle.id,
+        );
+        if (existingBottle) {
+          // Jika botol sudah ada, tambahkan jumlahnya
+          existingBottle.jumlah += 1;
+          return [...prevMinumanDipilih];
+        } else {
+          // Jika botol belum ada, tambahkan ke array dengan jumlah 1
+          return [...prevMinumanDipilih, { ...selectedBottle, jumlah: 1 }];
+        }
+      });
     }
   }
 

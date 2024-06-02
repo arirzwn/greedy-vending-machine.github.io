@@ -5,6 +5,7 @@ import ListBarang from "./layout/ListBarang.jsx";
 import TotalKembalian from "./layout/TotalKembalian.jsx";
 import ListBotol from "./layout/ListBotol.jsx";
 import AmbilKembalian from "./layout/AmbilKembalian.jsx";
+import Button from "./components/Button.jsx";
 
 const botol = [
   {
@@ -46,14 +47,30 @@ const botol = [
 ];
 
 export default function App() {
-  const [minumanDipilih, setMinumanDipilih] = useState({});
+  const [minumanDipilih, setMinumanDipilih] = useState([]);
+
   return (
     <>
       <div className="w-[60%] h-1/2 bg-slate-400 mx-auto min-h-screen my-4 p-4 flex gap-2">
         <div className="bg-pink-400  p-4 w-[70%]">
           <ListBotol data={botol} setMinumanDipilih={setMinumanDipilih} />
           <Input />
-          <ListBarang data={minumanDipilih} />
+          <div className="flex gap-2 mt-2">
+            <div className="flex-1">
+              {minumanDipilih.map((minuman, index) => (
+                <ListBarang
+                  key={index}
+                  data={minuman}
+                  jumlah={minuman.jumlah}
+                /> // Menggunakan jumlah dari setiap minuman
+              ))}
+            </div>
+            {minumanDipilih.length > 0 && (
+              <Button className="rounded-md shadow-slate-800 shadow-sm  text-sm w-20 bg-white">
+                Ambil
+              </Button>
+            )}
+          </div>
         </div>
         <div>
           <TotalKembalian />
