@@ -133,7 +133,7 @@ export default function App() {
   }, [totalUang, totalHarga]);
 
   function handleSelesai() {
-    if (totalKembalian === 0) {
+    if (totalKembalian == 0) {
       alert("Selesaikan pembayaran terlebih dahulu");
     } else {
       setMinumanDipilih([]);
@@ -145,8 +145,8 @@ export default function App() {
 
   return (
     <>
-      <div className="w-[60%] h-1/2 bg-[#3AA6B9] mx-auto min-h-screen my-4 p-4 flex gap-2">
-        <div className="bg-[#FF9EAA] p-4 w-[70%]">
+      <div className="w-[60%] h-1/2 bg-[#3AA6B9] rounded-md mx-auto min-h-screen  p-4 flex gap-2">
+        <div className="bg-[#FF9EAA] rounded-md p-4 w-[70%]">
           <ListBotol data={botol} setMinumanDipilih={setMinumanDipilih} />
           <Input
             dataHarga={botol}

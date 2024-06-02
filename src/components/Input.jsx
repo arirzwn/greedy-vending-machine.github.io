@@ -36,6 +36,7 @@ export default function Input({ totalHarga, handleBatal, setTotalKembalian }) {
         </div>
         <div className="flex gap-2">
           <input
+            type="number"
             className="block p-2 rounded-md flex-1"
             value={inputUang}
             onChange={handleInputChange}
