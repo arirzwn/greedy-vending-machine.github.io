@@ -49,11 +49,18 @@ const botol = [
 export default function App() {
   const [minumanDipilih, setMinumanDipilih] = useState([]);
   const [totalHarga, setTotalHarga] = useState(0);
+  const [totalUang, setTotalUang] = useState(0);
+  const [totalKembalian, setTotalKembalian] = useState(0);
 
   useEffect(() => {
     const total = calculateTotalBayar(minumanDipilih);
     setTotalHarga(total);
   }, [minumanDipilih]);
+
+  useEffect(() => {
+    const kembalian = calculateTotalKembalian(totalUang, totalHarga);
+    setTotalKembalian(kembalian);
+  }, [totalUang, totalHarga]);
 
   function calculateTotalBayar(minumanDipilih) {
     let total = 0;
@@ -61,6 +68,17 @@ export default function App() {
       total += minuman.harga * minuman.jumlah;
     });
     return total;
+  }
+
+  function calculateTotalKembalian(totalUang, totalHarga) {
+    return totalUang - totalHarga;
+  }
+
+  function handleBatal() {
+    setMinumanDipilih([]);
+    setTotalHarga(0);
+    setTotalUang(0);
+    setTotalKembalian(0);
   }
 
   return (
@@ -72,6 +90,8 @@ export default function App() {
             dataHarga={botol}
             setMinumanDipilih={setMinumanDipilih}
             totalHarga={totalHarga}
+            handleBatal={handleBatal}
+            setTotalKembalian={setTotalKembalian} // tambahkan ini
           />
           <div className="flex gap-2 mt-2">
             <div className="flex-1">
@@ -91,7 +111,7 @@ export default function App() {
           </div>
         </div>
         <div>
-          <TotalKembalian />
+          <TotalKembalian totalKembalian={totalKembalian} />
           <AmbilKembalian />
         </div>
       </div>

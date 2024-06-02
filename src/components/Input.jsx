@@ -1,17 +1,20 @@
 import { useState } from "react";
 import Button from "./Button.jsx";
 
-export default function Input({ dataHarga, totalHarga }) {
+export default function Input({ totalHarga, handleBatal, setTotalKembalian }) {
   const [totalUang, setTotalUang] = useState(0);
   const [inputUang, setInputUang] = useState(0);
 
   function handleInputUang() {
-    setTotalUang(totalUang + Number(inputUang));
+    const newTotalUang = totalUang + Number(inputUang);
+    setTotalUang(newTotalUang);
+    const kembalian = newTotalUang - totalHarga;
+    setTotalKembalian(kembalian);
     setInputUang(0); // reset input uang setelah ditambahkan ke total uang
   }
 
-  function handleInputChange(event) {
-    setInputUang(event.target.value);
+  function handleInputChange(e) {
+    setInputUang(e.target.value);
   }
 
   return (
@@ -25,9 +28,9 @@ export default function Input({ dataHarga, totalHarga }) {
           />
           <Button
             className="rounded-md shadow-slate-800 shadow-sm  text-sm w-20 bg-white"
-            onClick={() => setTotalUang(0)}
+            onClick={handleBatal}
           >
-            Reset
+            Batal
           </Button>
         </div>
         <div className="flex gap-2">
