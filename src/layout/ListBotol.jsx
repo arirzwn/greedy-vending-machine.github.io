@@ -2,14 +2,9 @@ import { useEffect, useState } from "react";
 
 export default function ListBotol({ data, setMinumanDipilih }) {
   const [pilihMinuman, setPilihMinuman] = useState();
-  const [selectedIds, setSelectedIds] = useState([]); // <-- Perubahan di sini
 
   function handleClick(id) {
-    if (!selectedIds.includes(id)) {
-      // <-- Perubahan di sini
-      setPilihMinuman(id);
-      setSelectedIds((prevIds) => [...prevIds, id]); // <-- Perubahan di sini
-    }
+    setPilihMinuman(id);
   }
 
   function getSelectedBottle() {
