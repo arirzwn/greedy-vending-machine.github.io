@@ -1,50 +1,32 @@
-const botol = [
-  {
-    id: 1,
-    nama: "Cool Cola",
-    img: "./src/assets/botol/Cool_Cola.png",
-    harga: 1000,
-  },
-  {
-    id: 2,
-    nama: "Green Cola",
-    img: " ./src/assets/botol/Green_Cola.png",
-    harga: 2000,
-  },
-  {
-    id: 3,
-    nama: "Orange Cola",
-    img: "./src/assets/botol/Orange_Cola.png",
-    harga: 2000,
-  },
-  {
-    id: 4,
-    nama: "Original Cola",
-    img: "./src/assets/botol/Original_Cola.png",
-    harga: 1000,
-  },
-  {
-    id: 5,
-    nama: "Violet Cola",
-    img: "./src/assets/botol/Violet_Cola.png",
-    harga: 1000,
-  },
-  {
-    id: 6,
-    nama: "Yellow Cola",
-    img: "./src/assets/botol/Yellow_Cola.png",
-    harga: 1000,
-  },
-];
+import { useEffect, useState } from "react";
 
-export default function ListBotol() {
+export default function ListBotol({ data, setMinumanDipilih }) {
+  const [pilihMinuman, setPilihMinuman] = useState();
+
+  function handleClick(id) {
+    setPilihMinuman(id);
+  }
+
+  function getSelectedBottle() {
+    const selectedBottle = data.find((b) => b.id === pilihMinuman);
+    if (selectedBottle) {
+      setMinumanDipilih(selectedBottle);
+      console.log(selectedBottle);
+    }
+  }
+
+  useEffect(() => {
+    getSelectedBottle();
+  }, [pilihMinuman]);
+
   return (
     <>
       <ul className="flex gap-4 flex-wrap justify-center ">
-        {botol.map((objBotol) => (
+        {data.map((objBotol) => (
           <li
             className="bg-white rounded-md shadow-md w-32 h-27  flex flex-col items-center p-2 active:ring-1 active:ring-amber-400"
             key={objBotol.id}
+            onClick={() => handleClick(objBotol.id)}
           >
             <figure className="w-6">
               <img src={objBotol.img} alt={objBotol.nama} />{" "}

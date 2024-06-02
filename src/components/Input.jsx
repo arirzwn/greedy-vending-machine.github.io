@@ -3,8 +3,16 @@ import Button from "./Button.jsx";
 
 export default function Input() {
   const [totalUang, setTotalUang] = useState(0);
-
   const [inputUang, setInputUang] = useState(0);
+
+  function handleInputUang() {
+    setTotalUang(totalUang + Number(inputUang));
+    setInputUang(0); // reset input uang setelah ditambahkan ke total uang
+  }
+
+  function handleInputChange(event) {
+    setInputUang(event.target.value);
+  }
 
   return (
     <>
@@ -15,20 +23,26 @@ export default function Input() {
             disabled
             value={totalUang}
           />
-          <Button className="rounded-md shadow-slate-800 shadow-sm  text-sm w-20 bg-white">
+          <Button
+            className="rounded-md shadow-slate-800 shadow-sm  text-sm w-20 bg-white"
+            onClick={() => setTotalUang(0)}
+          >
             Reset
           </Button>
         </div>
         <div className="flex gap-2">
-          <input className="block p-2 rounded-md flex-1 " />
-          <Button className="rounded-md shadow-slate-800 shadow-sm  text-sm w-20 bg-white">
+          <input
+            className="block p-2 rounded-md flex-1"
+            value={inputUang}
+            onChange={handleInputChange}
+          />
+          <Button
+            className="rounded-md shadow-slate-800 shadow-sm  text-sm w-20 bg-white"
+            onClick={handleInputUang}
+          >
             Masukan
           </Button>
         </div>
-        {/*<label htmlFor="sisa">Total uang</label>*/}
-        {/*<input className="block p-2 mb-4" disabled value={totalUang} />*/}
-        {/*<label htmlFor="sisa">Masukan uang</label>*/}
-        {/*<input className=" block p-2" value={inputUang} />*/}
       </div>
     </>
   );
