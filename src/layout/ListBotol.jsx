@@ -4,7 +4,23 @@ export default function ListBotol({ data, setMinumanDipilih }) {
   const [pilihMinuman, setPilihMinuman] = useState();
 
   function handleClick(id) {
-    setPilihMinuman(id);
+    setMinumanDipilih((prevMinumanDipilih) => {
+      const existingProductIndex = prevMinumanDipilih.findIndex(
+        (product) => product.id === id,
+      );
+      if (existingProductIndex !== -1) {
+        // Jika produk sudah ada, tambahkan jumlahnya
+        const existingProduct = { ...prevMinumanDipilih[existingProductIndex] };
+        existingProduct.jumlah += 1;
+        const newMinumanDipilih = [...prevMinumanDipilih];
+        newMinumanDipilih[existingProductIndex] = existingProduct;
+        return newMinumanDipilih;
+      } else {
+        // Jika produk belum ada, tambahkan ke array dengan jumlah 1
+        const newProduct = data.find((product) => product.id === id);
+        return [...prevMinumanDipilih, { ...newProduct, jumlah: 1 }];
+      }
+    });
   }
 
   function getSelectedBottle() {
@@ -35,7 +51,7 @@ export default function ListBotol({ data, setMinumanDipilih }) {
       <ul className="flex gap-4 flex-wrap justify-center ">
         {data.map((objBotol) => (
           <li
-            className="bg-white rounded-md shadow-md w-32 h-27  flex flex-col items-center p-2 active:ring-1 active:ring-amber-400"
+            className="bg-white rounded-md shadow-md w-32 h-27  flex flex-col items-center p-2 active:ring-1 active:ring-amber-400 hover:bg-[#3AA6B9] hover:text-white"
             key={objBotol.id}
             onClick={() => handleClick(objBotol.id)}
           >

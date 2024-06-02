@@ -23,10 +23,10 @@ export default function AmbilKembalian({ uang, totalKembalian }) {
               className="flex items-center justify-between"
               key={objUang.nominal}
             >
-              <figure>
+              <figure className="w-24">
                 <img src={objUang.gambar} alt={objUang.nominal} />
               </figure>
-              <span className="text-sm"> {coinCounts[index]} lembar </span>
+              <span className="text-sm"> {coinCounts[index]} x </span>
             </div>
           ))}
         </div>

@@ -26,8 +26,16 @@ const uang = [
     gambar: "./src/assets/Uang/limarebu.png",
   },
   {
+    nominal: 2000,
+    gambar: "./src/assets/Uang/duarebu.jpg",
+  },
+  {
     nominal: 1000,
     gambar: "./src/assets/Uang/serebu.png",
+  },
+  {
+    nominal: 500,
+    gambar: "./src/assets/Uang/gopean.png",
   },
 ];
 
@@ -75,7 +83,7 @@ export default function App() {
   const [totalHarga, setTotalHarga] = useState(0);
   const [totalUang, setTotalUang] = useState(0);
   const [totalKembalian, setTotalKembalian] = useState(0);
-  const [selesai, setSelesai] = useState(false);
+  const [uangmasuk, setUangMasuk] = useState(false);
 
   useEffect(() => {
     const total = calculateTotalBayar(minumanDipilih);
@@ -133,13 +141,14 @@ export default function App() {
   }, [totalUang, totalHarga]);
 
   function handleSelesai() {
-    if (totalKembalian == 0) {
+    if (!uangmasuk && totalKembalian < 0) {
       alert("Selesaikan pembayaran terlebih dahulu");
     } else {
       setMinumanDipilih([]);
       setTotalHarga(0);
       setTotalUang(0);
       setTotalKembalian(0);
+      setUangMasuk(false);
     }
   }
 
