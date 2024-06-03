@@ -42,39 +42,39 @@ const uang = [
 const botol = [
   {
     id: 1,
-    nama: "Cool Cola",
+    nama: "Pocari Sweat",
     img: "./src/assets/botol/Cool_Cola.png",
-    harga: 1000,
+    harga: 7000,
   },
   {
     id: 2,
-    nama: "Green Cola",
+    nama: "Sprite",
     img: " ./src/assets/botol/Green_Cola.png",
-    harga: 2000,
+    harga: 3500,
   },
   {
     id: 3,
-    nama: "Orange Cola",
+    nama: "Fanta",
     img: "./src/assets/botol/Orange_Cola.png",
-    harga: 2000,
+    harga: 4000,
   },
   {
     id: 4,
-    nama: "Original Cola",
+    nama: "Coca Cola",
     img: "./src/assets/botol/Original_Cola.png",
-    harga: 1000,
+    harga: 5500,
   },
   {
     id: 5,
-    nama: "Violet Cola",
+    nama: "Fruit Tea",
     img: "./src/assets/botol/Violet_Cola.png",
-    harga: 1000,
+    harga: 4500,
   },
   {
     id: 6,
-    nama: "Yellow Cola",
+    nama: "Big Cola",
     img: "./src/assets/botol/Yellow_Cola.png",
-    harga: 1000,
+    harga: 3000,
   },
 ];
 
@@ -141,8 +141,10 @@ export default function App() {
   }, [totalUang, totalHarga]);
 
   function handleSelesai() {
-    if (!uangmasuk && totalKembalian < 0) {
+    if (!uangmasuk && totalUang < 0) {
       alert("Selesaikan pembayaran terlebih dahulu");
+    }else if (!uangmasuk && totalKembalian < 0) {
+      alert("Uang Kurang");
     } else {
       setMinumanDipilih([]);
       setTotalHarga(0);
